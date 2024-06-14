@@ -15,6 +15,7 @@ spec:
     to:
       kind: ImageStreamTag
       name: echo-server:latest
+      namespace: my-echo-server
   triggers:
     - type: GitHub
       github:

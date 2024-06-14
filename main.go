@@ -9,8 +9,11 @@ import (
 
 func main() {
 	http.HandleFunc("/", echoHandler)
-	fmt.Println("Server is running on port 8080")
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("Server running on port 8080")
+
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatalf("Error starting server: %v", err)
+	}
 }
 
 func echoHandler(w http.ResponseWriter, r *http.Request) {

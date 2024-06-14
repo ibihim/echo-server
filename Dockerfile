@@ -17,10 +17,13 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o echo-server .
 # Stage 2: Create the final image
 FROM alpine:latest
 
-WORKDIR /root/
+WORKDIR /opt/
 
 # Copy the binary from the builder stage
 COPY --from=builder /app/echo-server .
+
+# Set the appropriate permissions for the binary
+RUN chmod +x ./echo-server
 
 # Expose the port the server will run on
 EXPOSE 8080
