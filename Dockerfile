@@ -4,7 +4,7 @@ FROM golang:1.22 AS builder
 WORKDIR /app
 
 # Copy the Go modules manifests
-COPY go.mod go.sum ./
+COPY go.mod ./
 # Download the Go modules
 RUN go mod download
 
@@ -12,7 +12,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go binary
-RUN go build -o echo-server .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o echo-server .
 
 # Stage 2: Create the final image
 FROM alpine:latest
