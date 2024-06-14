@@ -1,0 +1,24 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: echo-server
+  namespace: my-echo-server
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/ibihim/echo-server.git
+      ref: main
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: echo-server:latest
+  triggers:
+    - type: GitHub
+      github:
+        secretReference:
+          name: github-webhook-secret
+    - type: ConfigChange
+    - type: ImageChange
